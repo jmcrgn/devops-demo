@@ -1,0 +1,14 @@
+- hosts: webserver
+  become: yes
+  tasks:
+    - name: Pull latest Docker image
+      shell: docker pull myapp:latest
+
+    - name: Stop old container
+      shell: docker stop myapp || true
+
+    - name: Remove old container
+      shell: docker rm myapp || true
+
+    - name: Run new container
+      shell: docker run -d --name myapp -p 80:80 myapp:latest
